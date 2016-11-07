@@ -1,0 +1,16 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon --harmony-async-await app.js"
+  },
+  "dependencies": {
+    "es6-promise": "^4.0.5",
+    "express": "3.21.2",
+    "isomorphic-fetch": "^2.2.1",
+    "jade": "*",
+    "lodash": "^4.16.6",
+    "string": "^3.3.3"
+  }
+}
