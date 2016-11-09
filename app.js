@@ -12,6 +12,12 @@ var path = require('path');
 var cors = require('cors');
 var app = express();
 
+var methodOverride = require('method-override');
+
+//skill-branch homework middlewares
+var mongotest = require('./routes/mongotest');
+
+
 app.use(cors());
 
 // all environments
@@ -22,7 +28,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(express.methodOverride());
+//app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,6 +41,7 @@ if ('development' == app.get('env')) {
 
 
 app.get('/', routes.index);
+app.get('/mongotest', mongotest.index);
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
