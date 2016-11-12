@@ -42,14 +42,18 @@ exports.index = async function(req, res){
 		let diskSum = 0;
 		let resDisks = {};
 		for(let diskName in disks) {
-			diskSum = 0;
-			for (let disk in diskName) {
-				diskSum += disk.size; //тут что-то не работает совсем
-				console.log(disk);
-			}
+			//console.log(diskName);
+			//console.log(disks[diskName]);
+			//sum = disks[diskName].reduce((total, n) => (total + disks[diskName].size), 0);
+			let sum = 0;
+			_.forEach(disks[diskName], function (elem) {
+				sum += elem.size;//console.log(elem);
+			});
+			resDisks[diskName] = sum + 'B';
+			console.log(sum);
 		}
-		console.log(Object.keys(disks));
-		res.json(disks);
+		//console.log(Object.keys(disks));
+		res.json(resDisks);
 		return 0;
 	}
 
@@ -62,7 +66,7 @@ exports.index = async function(req, res){
 	}
 	catch(err) {
 		console.log('something is wrong ' + err);
-		res.status(404).send('Not Found')
+		res.status(404).send('Not found')
 		return -1;
 
 	}
