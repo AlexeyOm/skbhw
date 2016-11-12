@@ -16,6 +16,7 @@ var methodOverride = require('method-override');
 
 //skill-branch homework middlewares
 var mongotest = require('./routes/mongotest');
+var skb2c = require('./routes/skb2c');
 
 
 app.use(cors());
@@ -43,6 +44,10 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/mongotest', mongotest.index);
 app.get('/users', user.list);
+
+//homework paths
+app.get('/2c', skb2c.index);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
