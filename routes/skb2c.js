@@ -1,40 +1,39 @@
 
 exports.index = function(req, res){
-	
-		let a = 0;
-		let b = 0;
-		if (!isNaN(req.query.a)) {a = Number(req.query.a);}
-		if (!isNaN(req.query.b)) {b = Number(req.query.b);}
-		console.log(a.toString());
-		console.log(b.toString());
-		const sum = a + b;
-		res.send(sum.toString());	
+		let result = '';
+		console.log('==>' + req.query.username);
+		if (req.query.username == undefined ) {res.send ('invalid username');}
+		let inp = '/' + req.query.username + '?' ;
+		//lets parse special sites
+		if (inp.match(/github.com\//)) {
+			inp += '/';
+			inp = inp.substring(inp.indexOf('github.com') + 11, inp.indexOf('/', inp.indexOf('github.com') + 12));
+		}
+		if (inp.match(/vk.com\//)) {
+			inp += '/';
+			inp = inp.substring(inp.indexOf('vk.com') + 7, inp.indexOf('/', inp.indexOf('vk.com') + 8));
+			console.log('entered vk.com branch');
+		}
+		if (inp.match(/medium.com\//)) {
+			inp += '/';
+			inp = inp.substring(inp.indexOf('medium.com') + 11, inp.indexOf('/', inp.indexOf('medium.com') + 12));
+		}
+		
+
+
+
+		inp = '/' + inp + '?' ;
+		console.log(inp);
+		let extract = inp.match(/(\/|@)([a-zA-Z-._]+?)\?/);
+		if (!extract) {res.send ('invalid username');}
+		console.log(extract);
+		
+		//let result = extract[0] !== '@' ? extract : '@' + extract[extract.length-1].toString()
+		//if (extract[extract.length-1][0] === '@') {result = }
+
+		result = '@' + extract[extract.length-1].toString();
+
+		res.send(result);	
 
 	  
 };
-
-// var S = require('string');
-
-// exports.index = function(req, res){
-//     S.extendPrototype();
-//     const fullname = req.query.fullname.collapseWhitespace();
-// 	const badCharecters = /[0-9_/]/;
-// 	if(badCharecters.test(fullname)) {res.send('Invalid fullname'); return;}
-//     if(fullname.length === 0) {res.send('Invalid fullname'); return;}
-//     let otchname = '', name = '', surname = '';
-//     let result = '';
-// 	const chunks = fullname.split(" ");
-// 	if (chunks.length > 3 || chunks.length === 0) {res.send('Invalid fullname'); return;};
-// 	surname = chunks.pop();
-// 	result = surname.capitalize();
-// 	if (chunks.length > 0 ) {name = chunks.shift().substr(0,1) + '.'; result += ' ' + name.capitalize();}
-// 	if (chunks.length > 0 ) {otchname = chunks.pop().substr(0,1) + '.'; result += ' ' + otchname.capitalize();}
-	
-// 	console.log('got #' + result + '# from #' + req.query.fullname);
-	
-// 	S.restorePrototype(); //be a good citizen and clean up
-	
-// 	res.send(result.toString());
-
-// };
-
