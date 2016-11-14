@@ -22,6 +22,7 @@ function getProperty(obj, property) {
 
 exports.index = async function(req, res){
 
+	console.log('==>' + req.path);
 	const pc = await getPC(pcUrl);
 	let result = pc;
 	let i = 0;
@@ -32,7 +33,7 @@ exports.index = async function(req, res){
 	params = params.split('/');
 	
 	if(params.length === 1 && params[0].length === 0) {
-		console.log('here')
+		//console.log('here')
 		res.send(result);
 		return 0;
 	}
@@ -60,13 +61,16 @@ exports.index = async function(req, res){
 
 	try {
 		for(i = 0; i < params.length; i++) {
-			if(result[params[i]] === undefined) throw Error('wrong properties');
+			if(!(params[i] in result) || (Array.isArray(result) && params[i] === 'length')) {
+				throw Error('wrong properties');
+			}
+			console.log('==>' + params[i] + ' ' + result);
 			result = result[params[i]];
 		}
 	}
 	catch(err) {
 		console.log('something is wrong ' + err);
-		res.status(404).send('Not found')
+		res.status(404).send('Not Found')
 		return -1;
 
 	}
