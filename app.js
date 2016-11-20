@@ -18,6 +18,7 @@ var methodOverride = require('method-override');
 var mongotest = require('./routes/mongotest');
 var skb2c = require('./routes/skb2c');
 var skb2d = require('./routes/skb2d');
+var colors = require('./routes/colors');
 
 
 app.use(cors());
@@ -49,7 +50,7 @@ app.get('/users', user.list);
 //homework paths
 app.get('/2c', skb2c.index);
 app.get(/^\/2d(\/?.*|\/?)/, skb2d.index);
-
+app.get('/colors', colors.index);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
